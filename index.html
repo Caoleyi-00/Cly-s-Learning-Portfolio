@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>学生学习笔记</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif;
+            background: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .header {
+            background: #fff;
+            padding: 30px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .header h1 { font-size: 1.8em; margin-bottom: 10px; }
+        .header p { color: #666; }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+        
+        .course-section {
+            background: #fff;
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        
+        .course-section h2 {
+            font-size: 1.3em;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #3498db;
+            display: inline-block;
+        }
+        
+        .course-section span {
+            color: #888;
+            font-size: 0.9em;
+            margin-left: 10px;
+        }
+        
+        .note-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+        }
+        
+        .note-item {
+            background: #fafafa;
+            border-radius: 6px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.2s;
+            border: 1px solid #eee;
+        }
+        
+        .note-item:hover { transform: scale(1.03); }
+        
+        .note-item img {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+        }
+        
+        .note-item p {
+            padding: 8px;
+            font-size: 0.85em;
+            color: #666;
+            text-align: center;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.9);
+            z-index: 1000;
+        }
+        
+        .modal.active { display: flex; align-items: center; justify-content: center; flex-direction: column; }
+        
+        .modal-header {
+            width: 100%;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255,255,255,0.1);
+        }
+        
+        .modal-header h3 { color: #fff; }
+        
+        .modal-close {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 2em;
+            cursor: pointer;
+            padding: 0 10px;
+        }
+        
+        .modal-body { flex: 1; display: flex; align-items: center; justify-content: center; padding: 20px; }
+        
+        .modal-body img {
+            max-width: 95%;
+            max-height: 80vh;
+            object-fit: contain;
+        }
+        
+        .modal-footer {
+            padding: 15px;
+            text-align: center;
+            color: #fff;
+        }
+        
+        .modal-footer button {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: #fff;
+            padding: 10px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            margin: 0 10px;
+        }
+        
+        .modal-footer button:hover { background: rgba(255,255,255,0.3); }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <h1>学生学习笔记展示</h1>
+        <p>上海大学 · 运筹优化方向</p>
+    </header>
+    
+    <main class="container">
+        <section class="course-section">
+            <h2>数理方程<span>(13页)</span></h2>
+            <div class="note-grid">
+                <div class="note-item" onclick="openImg(0, 'math')"><img src="notes-images-compressed/IMG_20260421_182530.jpg" alt="第1页"><p>第1页</p></div>
+                <div class="note-item" onclick="openImg(1, 'math')"><img src="notes-images-compressed/IMG_20260421_182534.jpg" alt="第2页"><p>第2页</p></div>
+                <div class="note-item" onclick="openImg(2, 'math')"><img src="notes-images-compressed/IMG_20260421_182540.jpg" alt="第3页"><p>第3页</p></div>
+                <div class="note-item" onclick="openImg(3, 'math')"><img src="notes-images-compressed/IMG_20260421_182544.jpg" alt="第4页"><p>第4页</p></div>
+                <div class="note-item" onclick="openImg(4, 'math')"><img src="notes-images-compressed/IMG_20260421_182552.jpg" alt="第5页"><p>第5页</p></div>
+                <div class="note-item" onclick="openImg(5, 'math')"><img src="notes-images-compressed/IMG_20260421_182558.jpg" alt="第6页"><p>第6页</p></div>
+                <div class="note-item" onclick="openImg(6, 'math')"><img src="notes-images-compressed/IMG_20260421_182604.jpg" alt="第7页"><p>第7页</p></div>
+                <div class="note-item" onclick="openImg(7, 'math')"><img src="notes-images-compressed/IMG_20260421_182608.jpg" alt="第8页"><p>第8页</p></div>
+                <div class="note-item" onclick="openImg(8, 'math')"><img src="notes-images-compressed/IMG_20260421_182625.jpg" alt="第9页"><p>第9页</p></div>
+                <div class="note-item" onclick="openImg(9, 'math')"><img src="notes-images-compressed/IMG_20260421_182629.jpg" alt="第10页"><p>第10页</p></div>
+                <div class="note-item" onclick="openImg(10, 'math')"><img src="notes-images-compressed/IMG_20260421_182638.jpg" alt="第11页"><p>第11页</p></div>
+                <div class="note-item" onclick="openImg(11, 'math')"><img src="notes-images-compressed/IMG_20260421_182643.jpg" alt="第12页"><p>第12页</p></div>
+                <div class="note-item" onclick="openImg(12, 'math')"><img src="notes-images-compressed/IMG_20260421_182654.jpg" alt="第13页"><p>第13页</p></div>
+            </div>
+        </section>
+        
+        <section class="course-section">
+            <h2>数理统计<span>(19页)</span></h2>
+            <div class="note-grid">
+                <div class="note-item" onclick="openImg(0, 'stats')"><img src="notes-images-compressed/未命名笔记9_1.jpg" alt="第1页"><p>第1页</p></div>
+                <div class="note-item" onclick="openImg(1, 'stats')"><img src="notes-images-compressed/未命名笔记9_2.jpg" alt="第2页"><p>第2页</p></div>
+                <div class="note-item" onclick="openImg(2, 'stats')"><img src="notes-images-compressed/未命名笔记9_3.jpg" alt="第3页"><p>第3页</p></div>
+                <div class="note-item" onclick="openImg(3, 'stats')"><img src="notes-images-compressed/未命名笔记9_4.jpg" alt="第4页"><p>第4页</p></div>
+                <div class="note-item" onclick="openImg(4, 'stats')"><img src="notes-images-compressed/未命名笔记9_5.jpg" alt="第5页"><p>第5页</p></div>
+                <div class="note-item" onclick="openImg(5, 'stats')"><img src="notes-images-compressed/未命名笔记9_6.jpg" alt="第6页"><p>第6页</p></div>
+                <div class="note-item" onclick="openImg(6, 'stats')"><img src="notes-images-compressed/未命名笔记9_7.jpg" alt="第7页"><p>第7页</p></div>
+                <div class="note-item" onclick="openImg(7, 'stats')"><img src="notes-images-compressed/未命名笔记9_8.jpg" alt="第8页"><p>第8页</p></div>
+                <div class="note-item" onclick="openImg(8, 'stats')"><img src="notes-images-compressed/未命名笔记9_9.jpg" alt="第9页"><p>第9页</p></div>
+                <div class="note-item" onclick="openImg(9, 'stats')"><img src="notes-images-compressed/未命名笔记9_10.jpg" alt="第10页"><p>第10页</p></div>
+                <div class="note-item" onclick="openImg(10, 'stats')"><img src="notes-images-compressed/未命名笔记9_11.jpg" alt="第11页"><p>第11页</p></div>
+                <div class="note-item" onclick="openImg(11, 'stats')"><img src="notes-images-compressed/未命名笔记9_12.jpg" alt="第12页"><p>第12页</p></div>
+                <div class="note-item" onclick="openImg(12, 'stats')"><img src="notes-images-compressed/未命名笔记9_13.jpg" alt="第13页"><p>第13页</p></div>
+                <div class="note-item" onclick="openImg(13, 'stats')"><img src="notes-images-compressed/未命名笔记9_14.jpg" alt="第14页"><p>第14页</p></div>
+                <div class="note-item" onclick="openImg(14, 'stats')"><img src="notes-images-compressed/未命名笔记9_15.jpg" alt="第15页"><p>第15页</p></div>
+                <div class="note-item" onclick="openImg(15, 'stats')"><img src="notes-images-compressed/未命名笔记9_16.jpg" alt="第16页"><p>第16页</p></div>
+                <div class="note-item" onclick="openImg(16, 'stats')"><img src="notes-images-compressed/未命名笔记9_17.jpg" alt="第17页"><p>第17页</p></div>
+                <div class="note-item" onclick="openImg(17, 'stats')"><img src="notes-images-compressed/未命名笔记9_18.jpg" alt="第18页"><p>第18页</p></div>
+                <div class="note-item" onclick="openImg(18, 'stats')"><img src="notes-images-compressed/未命名笔记9_19.jpg" alt="第19页"><p>第19页</p></div>
+            </div>
+        </section>
+        
+        <section class="course-section">
+            <h2>数值最优化方法<span>(18页)</span></h2>
+            <div class="note-grid">
+                <div class="note-item" onclick="openImg(0, 'opt')"><img src="notes-images-compressed/IMG_20260421_181926.jpg" alt="第1页"><p>第1页</p></div>
+                <div class="note-item" onclick="openImg(1, 'opt')"><img src="notes-images-compressed/IMG_20260421_182003.jpg" alt="第2页"><p>第2页</p></div>
+                <div class="note-item" onclick="openImg(2, 'opt')"><img src="notes-images-compressed/IMG_20260421_182015.jpg" alt="第3页"><p>第3页</p></div>
+                <div class="note-item" onclick="openImg(3, 'opt')"><img src="notes-images-compressed/IMG_20260421_182023.jpg" alt="第4页"><p>第4页</p></div>
+                <div class="note-item" onclick="openImg(4, 'opt')"><img src="notes-images-compressed/IMG_20260421_182036.jpg" alt="第5页"><p>第5页</p></div>
+                <div class="note-item" onclick="openImg(5, 'opt')"><img src="notes-images-compressed/IMG_20260421_182044.jpg" alt="第6页"><p>第6页</p></div>
+                <div class="note-item" onclick="openImg(6, 'opt')"><img src="notes-images-compressed/IMG_20260421_182057.jpg" alt="第7页"><p>第7页</p></div>
+                <div class="note-item" onclick="openImg(7, 'opt')"><img src="notes-images-compressed/IMG_20260421_182111.jpg" alt="第8页"><p>第8页</p></div>
+                <div class="note-item" onclick="openImg(8, 'opt')"><img src="notes-images-compressed/IMG_20260421_182120.jpg" alt="第9页"><p>第9页</p></div>
+                <div class="note-item" onclick="openImg(9, 'opt')"><img src="notes-images-compressed/IMG_20260421_182130.jpg" alt="第10页"><p>第10页</p></div>
+                <div class="note-item" onclick="openImg(10, 'opt')"><img src="notes-images-compressed/IMG_20260421_182138.jpg" alt="第11页"><p>第11页</p></div>
+                <div class="note-item" onclick="openImg(11, 'opt')"><img src="notes-images-compressed/IMG_20260421_182151.jpg" alt="第12页"><p>第12页</p></div>
+                <div class="note-item" onclick="openImg(12, 'opt')"><img src="notes-images-compressed/IMG_20260421_182158.jpg" alt="第13页"><p>第13页</p></div>
+                <div class="note-item" onclick="openImg(13, 'opt')"><img src="notes-images-compressed/IMG_20260421_182208.jpg" alt="第14页"><p>第14页</p></div>
+                <div class="note-item" onclick="openImg(14, 'opt')"><img src="notes-images-compressed/IMG_20260421_182215.jpg" alt="第15页"><p>第15页</p></div>
+                <div class="note-item" onclick="openImg(15, 'opt')"><img src="notes-images-compressed/IMG_20260421_182229.jpg" alt="第16页"><p>第16页</p></div>
+                <div class="note-item" onclick="openImg(16, 'opt')"><img src="notes-images-compressed/IMG_20260421_182236.jpg" alt="第17页"><p>第17页</p></div>
+                <div class="note-item" onclick="openImg(17, 'opt')"><img src="notes-images-compressed/IMG_20260421_182242.jpg" alt="第18页"><p>第18页</p></div>
+            </div>
+        </section>
+    </main>
+    
+    <div class="modal" id="modal">
+        <div class="modal-header">
+            <h3 id="modalTitle">笔记</h3>
+            <button class="modal-close" onclick="closeModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <img id="modalImg" src="" alt="">
+        </div>
+        <div class="modal-footer">
+            <button onclick="prevPage()">◀ 上一页</button>
+            <span id="pageInfo">1 / 1</span>
+            <button onclick="nextPage()">下一页 ▶</button>
+        </div>
+    </div>
+    
+    <script>
+        const images = {
+            math: [
+                'notes-images-compressed/IMG_20260421_182530.jpg',
+                'notes-images-compressed/IMG_20260421_182534.jpg',
+                'notes-images-compressed/IMG_20260421_182540.jpg',
+                'notes-images-compressed/IMG_20260421_182544.jpg',
+                'notes-images-compressed/IMG_20260421_182552.jpg',
+                'notes-images-compressed/IMG_20260421_182558.jpg',
+                'notes-images-compressed/IMG_20260421_182604.jpg',
+                'notes-images-compressed/IMG_20260421_182608.jpg',
+                'notes-images-compressed/IMG_20260421_182625.jpg',
+                'notes-images-compressed/IMG_20260421_182629.jpg',
+                'notes-images-compressed/IMG_20260421_182638.jpg',
+                'notes-images-compressed/IMG_20260421_182643.jpg',
+                'notes-images-compressed/IMG_20260421_182654.jpg'
+            ],
+            stats: [
+                'notes-images-compressed/未命名笔记9_1.jpg',
+                'notes-images-compressed/未命名笔记9_2.jpg',
+                'notes-images-compressed/未命名笔记9_3.jpg',
+                'notes-images-compressed/未命名笔记9_4.jpg',
+                'notes-images-compressed/未命名笔记9_5.jpg',
+                'notes-images-compressed/未命名笔记9_6.jpg',
+                'notes-images-compressed/未命名笔记9_7.jpg',
+                'notes-images-compressed/未命名笔记9_8.jpg',
+                'notes-images-compressed/未命名笔记9_9.jpg',
+                'notes-images-compressed/未命名笔记9_10.jpg',
+                'notes-images-compressed/未命名笔记9_11.jpg',
+                'notes-images-compressed/未命名笔记9_12.jpg',
+                'notes-images-compressed/未命名笔记9_13.jpg',
+                'notes-images-compressed/未命名笔记9_14.jpg',
+                'notes-images-compressed/未命名笔记9_15.jpg',
+                'notes-images-compressed/未命名笔记9_16.jpg',
+                'notes-images-compressed/未命名笔记9_17.jpg',
+                'notes-images-compressed/未命名笔记9_18.jpg',
+                'notes-images-compressed/未命名笔记9_19.jpg'
+            ],
+            opt: [
+                'notes-images-compressed/IMG_20260421_181926.jpg',
+                'notes-images-compressed/IMG_20260421_182003.jpg',
+                'notes-images-compressed/IMG_20260421_182015.jpg',
+                'notes-images-compressed/IMG_20260421_182023.jpg',
+                'notes-images-compressed/IMG_20260421_182036.jpg',
+                'notes-images-compressed/IMG_20260421_182044.jpg',
+                'notes-images-compressed/IMG_20260421_182057.jpg',
+                'notes-images-compressed/IMG_20260421_182111.jpg',
+                'notes-images-compressed/IMG_20260421_182120.jpg',
+                'notes-images-compressed/IMG_20260421_182130.jpg',
+                'notes-images-compressed/IMG_20260421_182138.jpg',
+                'notes-images-compressed/IMG_20260421_182151.jpg',
+                'notes-images-compressed/IMG_20260421_182158.jpg',
+                'notes-images-compressed/IMG_20260421_182208.jpg',
+                'notes-images-compressed/IMG_20260421_182215.jpg',
+                'notes-images-compressed/IMG_20260421_182229.jpg',
+                'notes-images-compressed/IMG_20260421_182236.jpg',
+                'notes-images-compressed/IMG_20260421_182242.jpg'
+            ]
+        };
+        
+        const titles = { math: '数理方程', stats: '数理统计', opt: '数值最优化方法' };
+        let currentType = null, currentIdx = 0;
+        
+        function openImg(idx, type) {
+            currentIdx = idx;
+            currentType = type;
+            document.getElementById('modalTitle').textContent = titles[type];
+            updateModal();
+            document.getElementById('modal').classList.add('active');
+        }
+        
+        function closeModal() {
+            document.getElementById('modal').classList.remove('active');
+        }
+        
+        function updateModal() {
+            document.getElementById('modalImg').src = images[currentType][currentIdx];
+            document.getElementById('pageInfo').textContent = `${currentIdx + 1} / ${images[currentType].length}`;
+        }
+        
+        function prevPage() {
+            currentIdx = (currentIdx - 1 + images[currentType].length) % images[currentType].length;
+            updateModal();
+        }
+        
+        function nextPage() {
+            currentIdx = (currentIdx + 1) % images[currentType].length;
+            updateModal();
+        }
+        
+        document.addEventListener('keydown', e => {
+            if (!document.getElementById('modal').classList.contains('active')) return;
+            if (e.key === 'ArrowLeft') prevPage();
+            if (e.key === 'ArrowRight') nextPage();
+            if (e.key === 'Escape') closeModal();
+        });
+    </script>
+</body>
+</html>
